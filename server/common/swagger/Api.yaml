@@ -29,7 +29,9 @@ definitions:
     type: object
     title: movement
     required:
-      - name
+      - player
+      - origen
+      - destino
     properties:
       player:
         type: string
