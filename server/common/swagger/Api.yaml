@@ -1,0 +1,114 @@
+swagger: "2.0"
+info:
+  version: 1.0.0
+  title: Chess app
+  description: My chess app
+basePath: /api/v1
+tags:
+  - name: Examples
+    description: Simple example endpoints
+  - name: Specification
+    description: The swagger API specification
+
+consumes:
+  - application/json
+produces:
+  - application/json
+
+definitions:
+  ExampleBody:
+    type: object
+    title: example
+    required:
+      - name
+    properties:
+      name:
+        type: string
+        description: The example name
+  Movement:
+    type: object
+    title: movement
+    required:
+      - name
+    properties:
+      player:
+        type: string
+        description: El identificador del jugador ("1" o "2")
+      origen:
+        type: string
+        description: 2 caracteres, la 1ra es la letra y la segunda el numero
+      destino:
+        type: string
+        description: 2 caracteres, la 1ra es la letra y la segunda el numero
+            
+
+paths:
+  /start:
+    get:
+      tags:
+        - ChessGame
+      description: Es para iniciar un juego, el servidor debe almacenar el turno del jugador
+      responses:
+        200:
+          description: El juego se inició existosamente
+  /movement:
+    post:
+      tags:
+        - ChessGame
+      description: Hacer un movimiento
+      parameters:
+        - name: movement
+          in: body
+          description: Jugada a ser realizada
+          required: true
+          schema: 
+            $ref: "#/definitions/Movement"
+      responses:
+        200:
+          description: La jugada se realizó con éxito
+  /examples:
+    get:
+      tags:
+        - Examples
+      description: Fetch all examples (traer todos los ejemplos)
+      responses:
+        200:
+          description: Returns all examples
+    post:
+      tags:
+        - Examples
+      description: Create a new example
+      parameters:
+        - name: example
+          in: body
+          description: number of items to skip
+          required: true
+          schema: 
+            $ref: "#/definitions/ExampleBody"
+      responses:
+        200:
+          description: Returns all examples
+
+  /examples/{id}:
+    get:
+      tags:
+        - Examples
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: The id of the entity to retrieve
+          type: integer
+      responses:
+        200:
+          description: Return the example with the specified id
+        404:
+          description: Example not 
+
+  /spec:
+    get:
+      tags:
+        - Specification
+      responses:
+        200:
+          description: Return the API specification
